@@ -81,7 +81,7 @@ public class Main {
                 System.out.println("despues del insert" + biblioteca.toString());
                 break;
             case "C":
-                System.out.println("Vas a hacer login");
+                System.out.println("Vas a hacer login BIBLIOTECARIO");
                 break;
             case "Salir":
                 System.out.println("Vas a salir");
