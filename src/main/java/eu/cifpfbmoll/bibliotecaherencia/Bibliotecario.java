@@ -78,6 +78,15 @@ public class Bibliotecario extends Persona{
         
     }
     
+    @Override
+    public boolean prohibirEntrada(String nombreUsuario, String constraseña){
+        if(this.getNif().equals(nombreUsuario)&& this.getContraseña().equals(constraseña)){
+            return false;
+        }
+        else {return true;}
+    }
+    
+    
     
     
 }

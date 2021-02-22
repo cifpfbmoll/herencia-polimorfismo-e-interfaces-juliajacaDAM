@@ -6,6 +6,7 @@
 package eu.cifpfbmoll.bibliotecaherencia;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -80,4 +81,61 @@ public class Biblioteca {
   
     }
     
+    public int identificarUsuario(){
+        int intentos = 0;
+        boolean prohibirUsuario = true;
+        int posicionUsuario = -1;
+        
+        Scanner lector = new Scanner(System.in);
+        do{
+            System.out.println("Escribe el correo");
+            String correo = lector.nextLine();
+            System.out.println("Escribe el telefono");
+            String telefono = lector.nextLine();
+            
+            int posicionPersona = 0;
+
+            do{
+                if(this.getPersonas().get(posicionPersona) instanceof Usuario){
+                    System.out.println("Usuario");
+                    prohibirUsuario = this.getPersonas().get(posicionPersona).prohibirEntrada(correo, telefono);
+                    if(prohibirUsuario == false){
+                        return posicionPersona;
+                    }
+                }
+                posicionPersona ++;
+
+            }while(prohibirUsuario && posicionPersona < this.getPersonas().size());
+            intentos ++;
+            
+        } while(intentos < 3);
+        System.out.println("El usuario no existe");
+        return posicionUsuario;
+        }
+        
+    public void prestarLibro(){       
+        int posicionUsuario = identificarUsuario();
+        System.out.println("Posiscion usuario" + posicionUsuario);
+        if (posicionUsuario != -1){
+                System.out.println("Estas en el user "+this.getPersonas().get(posicionUsuario).toString());
+                // aqui se reserva el libro o se devuelve el libro
+                this.mostrarLibros();
+                int posicionLibro = Libro.buscarLibroPorISBN(this.getLibros());
+                System.out.println("posición libro"  + posicionLibro);
+
+                if(this.getLibros().get(posicionLibro).getNumeroCopiasDisponibles() > 0){// teniendo la posicion del libro vamos a hacer la reserva
+                    Reserva prueba = new Reserva(this.getLibros().get(posicionLibro));
+                    ArrayList <Reserva> reservas = ((Usuario)this.getPersonas().get(posicionUsuario )).getListaReservas();
+                    reservas.add(prueba);
+                    ((Usuario)this.getPersonas().get(posicionUsuario)).setListaReservas(reservas);
+                    int copiasAntes = this.getLibros().get(posicionLibro).getNumeroCopiasDisponibles();
+                    this.getLibros().get(posicionLibro).setNumeroCopiasDisponibles(copiasAntes - 1);
+                    System.out.println( ((Usuario)this.getPersonas().get(posicionUsuario)).toString());
+
+                }else{
+                    System.out.println("Ese libro no se puede reservar porque no hay copias disponibles");}
+            }
+        
+    }
+    // fin del metodo
 }

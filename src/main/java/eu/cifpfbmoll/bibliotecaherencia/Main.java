@@ -37,16 +37,18 @@ public class Main {
         //System.out.println(prueba.toString());
         
         Usuario usuario1 = new Usuario("00000", "C/Falsa", "41222", "hola@hola","estrellita", "castro","fer", 87 );
+        Bibliotecario bibliotecarioPrueba = new Bibliotecario("1","1","1", "Jacinta", "Fortun", "Lama",77);
         System.out.println(usuario1.toString());
         ArrayList<Persona> arrayPersonas = biblioteca.getPersonas();
         arrayPersonas.add(0, usuario1);
+        arrayPersonas.add(bibliotecarioPrueba);
         biblioteca.setPersonas(arrayPersonas);
         //usuario1.solicitarDatosPersona();
         
         boolean continuar = true;
         while(continuar){
             Scanner lector = new Scanner(System.in);
-            System.out.println("Escribe la opción que quieras:" + "\n" + " A: Añadir USUARIO" + "\n" + "B:Añadir bibliotecario" + "\n" +" L: Hacer login" + "\n" +  " Salir: cerrar la aplicación" );
+            System.out.println("Escribe la opción que quieras:\n A: Añadir USUARIO\nB:Añadir bibliotecario\n L: Hacer login\n Salir: cerrar la aplicación" );
             String opcion = lector.nextLine();
             System.out.println("La opción del usuario es " + opcion);
             switch(opcion){
@@ -80,8 +82,61 @@ public class Main {
                 bibliotecario1.solicitarDatosPersona();
                 System.out.println("despues del insert" + biblioteca.toString());
                 break;
-            case "C":
+            case "L":
                 System.out.println("Vas a hacer login BIBLIOTECARIO");
+                boolean entradaProhibida = true;
+                int intentosLogin = 0;
+                System.out.println(biblioteca.getPersonas().toString());
+                while(entradaProhibida && intentosLogin < 3){
+                    System.out.println("Escribe el NIF");
+                    String nombreBibliotecario = lector.nextLine();
+                    System.out.println("Escribe la pass");
+                    String nif = lector.nextLine();
+                    System.out.println(intentosLogin);
+                    int posicion = 0;
+                    do{
+                        if(biblioteca.getPersonas().get(posicion) instanceof Bibliotecario){
+                            System.out.println("bibliotecario");
+                            entradaProhibida = biblioteca.getPersonas().get(posicion).prohibirEntrada(nombreBibliotecario, nif);
+                            System.out.println(entradaProhibida);
+                          
+                        }
+                        posicion ++;
+                    }while(entradaProhibida && posicion < biblioteca.getPersonas().size());
+                    intentosLogin++;
+                    
+                    if(entradaProhibida == false){
+                        System.out.println("Bienvenido"+biblioteca.getPersonas().get(posicion-1).toString());
+                        String desloguear = "no";
+                        do{
+                            System.out.println("Elige tu opcion \n P:Prestar Libro \n D:Devolver \n Salir: Desloguear");
+                            
+                            String opcionBiblio = lector.nextLine();
+                            switch(opcionBiblio){
+                                case "P":
+                                    // PRESTAR LIBRO (llama tmb a itentificar usuario)
+                                    biblioteca.prestarLibro();
+                                    break;
+                                case "D":
+                                    System.out.println("Vas a devolver un libro");
+                                   // El usuario tiene que hacer login
+                                    break;
+                                case "Salir":
+                                    desloguear = "si";
+                                    break;
+                                default:
+                                    System.out.println("Opcion incorrecta");
+                            }
+                        }while("no".equals(desloguear));
+                        
+                    }
+                                      
+                }
+                
+                if(intentosLogin == 3 && entradaProhibida){
+                    System.out.println("Bibliotecario, te has equivicado demasiadas veces. El sistema va a salir");
+                    continuar = false;
+                }
                 break;
             case "Salir":
                 System.out.println("Vas a salir");

@@ -93,6 +93,9 @@ public class Persona {
         this.setApellido1(apellido1);
         this.setApellido2(apellido2);
         this.setEdad(edad);
-        
     }
+    
+    public boolean prohibirEntrada(String nif, String pass){
+        return true;
+    };
 }

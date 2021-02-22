@@ -162,7 +162,7 @@ public class Libro {
     public static int buscarLibroPorISBN(ArrayList <Libro> arrayLibros){
         Scanner lector = new Scanner(System.in);
         int posicionLibro = -1;
-        System.out.println("Dime el ISBN del libro que quieres elminar");
+        System.out.println("Dime el ISBN del libro");
         String ISBNUsuario = lector.nextLine();
         for(int i = 0; i < arrayLibros.size(); i++){
             if(arrayLibros.get(i).getISBN().equals(ISBNUsuario)){

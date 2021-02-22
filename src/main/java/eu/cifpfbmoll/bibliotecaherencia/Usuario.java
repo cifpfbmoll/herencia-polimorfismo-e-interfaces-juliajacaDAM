@@ -100,11 +100,17 @@ public class Usuario extends Persona{
         this.setDireccion(direccion);
         this.setCorreo(correo);
         this.setCp(cp);
-
-        
-        
-        
+              
     }
+
+    @Override
+    public boolean prohibirEntrada(String correo, String telefono) {
+         if(this.getCorreo().equals(correo)&& this.getTelefono().equals(telefono)){
+            return false;
+        }
+         return true;
+    }
+    
     
     
 }
