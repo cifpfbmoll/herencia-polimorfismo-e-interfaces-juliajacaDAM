@@ -11,7 +11,8 @@ import java.util.Scanner;
  *
  * @author USER
  */
-public class Persona {
+//cambio la clase persona a abstracta. Todo funciona con normalidad
+public abstract class Persona {
     private String nombre;
     private String apellido1;
     private String apellido2;

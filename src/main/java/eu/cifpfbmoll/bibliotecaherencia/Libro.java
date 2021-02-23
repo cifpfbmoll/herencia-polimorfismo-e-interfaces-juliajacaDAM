@@ -183,4 +183,19 @@ public class Libro {
             }
         }
     }
+    
+    public static int devolverPosicionLibroPorISBN(String ISBN, ArrayList <Libro> arrayLibros){
+        int posicionLibro = -1;
+        int vueltas = 0;
+        while(posicionLibro !=1 && vueltas < arrayLibros.size()){
+         if(arrayLibros.get(vueltas).getISBN().equals(ISBN)){
+                System.out.println("Libro encontrado");
+                posicionLibro = vueltas;
+            }
+         vueltas++;
+        }
+        return posicionLibro;   
+    }
+
+    // FIn de la clase
 }

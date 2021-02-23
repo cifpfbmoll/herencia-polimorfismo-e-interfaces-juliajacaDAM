@@ -138,4 +138,43 @@ public class Biblioteca {
         
     }
     // fin del metodo
+    public void devolverLibro(){
+        int posicionUsuario = identificarUsuario();
+        System.out.println("Posiscion usuario" + posicionUsuario);
+        if (posicionUsuario != -1){
+            System.out.println("Estas en el user "+this.getPersonas().get(posicionUsuario).toString());
+            // Mostrar los libros del usuario
+            ArrayList <Reserva> reservas = ((Usuario)this.getPersonas().get(posicionUsuario)).getListaReservas();
+            System.out.println(reservas);
+            // Creo un array de libros con las reservas del usuario
+            ArrayList <Libro> librosUser = new ArrayList();
+            for(int i = 0; i < reservas.size(); i++){
+                Libro libro = reservas.get(i).getLibroReservado();
+                librosUser.add(libro);
+            }
+            int posicionLibro = Libro.buscarLibroPorISBN(librosUser);
+            System.out.println(librosUser);
+            System.out.println("Posicion del libro" + posicionLibro);
+            
+            //si el libro está
+            if(posicionLibro != -1){
+                //lo quitaoms de la lista de reservas
+                reservas.remove(posicionLibro);
+                String ISBNLibro = librosUser.get(posicionLibro).getISBN();
+                // busco el libro en la coleccion de la biblioteca
+                int posicionLibroBiblioteca = Libro.devolverPosicionLibroPorISBN(ISBNLibro, this.getLibros());
+                System.out.println(posicionLibroBiblioteca + "esta es la posicion del libro");
+                //Añado una copia disponible al libro en la biblioteca
+                this.getLibros().get(posicionLibroBiblioteca).setNumeroCopiasDisponibles(this.getLibros().get(posicionLibroBiblioteca).getNumeroCopiasDisponibles() +1);
+                System.out.println(this.getLibros().get(posicionLibroBiblioteca).toString());
+                this.getLibros().get(posicionLibroBiblioteca).toString();
+               // el libro no está en la lista de reservas del usuario
+            }else{
+                System.out.println("Ese libro no está en la lista del usuario");
+            }
+ 
+        }else{
+        System.out.println("El usuario no existe");
+        }
+    }
 }

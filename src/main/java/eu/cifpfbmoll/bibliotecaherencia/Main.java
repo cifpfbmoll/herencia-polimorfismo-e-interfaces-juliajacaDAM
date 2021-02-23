@@ -19,7 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
         System.out.println("HOLA MUNDO");
-        Libro libro1 = new Libro("ISBN1", "El nombre de la rosa","Umberto ECO", "AAA Editores", 20,20);
+        Libro libro1 = new Libro("ISBN1", "El nombre de la rosa","Umberto ECO", "AAA Editores", 20,19);
         Libro libro2 = new Libro("ISBN2", "Sinuhe el Egipcio","Mika Waltari", "BBB Editores", 1,1);
         System.out.println(libro1.toString());
         ArrayList <Libro> coleccion = new ArrayList <Libro>();
@@ -28,7 +28,7 @@ public class Main {
         Biblioteca biblioteca = new Biblioteca("maria Moliner");
         biblioteca.setLibros(coleccion);
         System.out.println(biblioteca.toString());
-        //Reserva prueba = new Reserva(libro1);
+        
         //System.out.println(prueba.horaReserva);
         //System.out.println(prueba.fechaReserva);
         //System.out.println(prueba.fecha2);
@@ -37,6 +37,10 @@ public class Main {
         //System.out.println(prueba.toString());
         
         Usuario usuario1 = new Usuario("00000", "C/Falsa", "41222", "hola@hola","estrellita", "castro","fer", 87 );
+        Reserva prueba = new Reserva(libro1);
+        ArrayList <Reserva> reservasUser = usuario1.getListaReservas();
+        reservasUser.add(prueba);
+        usuario1.setListaReservas(reservasUser);
         Bibliotecario bibliotecarioPrueba = new Bibliotecario("1","1","1", "Jacinta", "Fortun", "Lama",77);
         System.out.println(usuario1.toString());
         ArrayList<Persona> arrayPersonas = biblioteca.getPersonas();
@@ -120,6 +124,7 @@ public class Main {
                                 case "D":
                                     System.out.println("Vas a devolver un libro");
                                    // El usuario tiene que hacer login
+                                    biblioteca.devolverLibro();
                                     break;
                                 case "Salir":
                                     desloguear = "si";
