@@ -196,6 +196,7 @@ public class Libro {
         }
         return posicionLibro;   
     }
-
+    
+   
     // FIn de la clase
 }

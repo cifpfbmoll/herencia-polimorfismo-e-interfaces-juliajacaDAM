@@ -81,6 +81,38 @@ public class Biblioteca {
   
     }
     
+    public int identificarBibliotecario(){
+        int intentos = 0;
+        boolean prohibirBibliotecario = true;
+        
+        Scanner lector = new Scanner(System.in);
+        do{
+            System.out.println("Escribe el nif");
+            String nif = lector.nextLine();
+            System.out.println("Escribe el contraseña");
+            String contraseña = lector.nextLine();
+            
+            int posicionPersona = 0;
+
+            do{
+                if(this.getPersonas().get(posicionPersona) instanceof Bibliotecario){
+                    System.out.println("Bibliotecario");
+                    prohibirBibliotecario = this.getPersonas().get(posicionPersona).prohibirEntrada(nif, contraseña);
+                    if(prohibirBibliotecario == false){
+                        return posicionPersona;
+                    }
+                }
+                posicionPersona ++;
+
+            }while(prohibirBibliotecario && posicionPersona < this.getPersonas().size());
+            intentos ++;
+            
+        } while(intentos < 3);
+        System.out.println("El bibliotecario no existe");
+        return -1;
+        
+    }
+    
     public int identificarUsuario(){
         int intentos = 0;
         boolean prohibirUsuario = true;
@@ -176,5 +208,56 @@ public class Biblioteca {
         }else{
         System.out.println("El usuario no existe");
         }
+    }
+    
+    // metodo libro copia
+    public void añadirLibroCopia(int posicionLibro){
+        Libro libroCopia = new Libro(this.getLibros().get(posicionLibro));
+        Scanner lector = new Scanner(System.in);
+        System.out.println("Quieres modificar el ISBN? Escribe Y");
+        String respuesta = lector.nextLine();
+        if(respuesta.equals("Y")){
+            System.out.println("Escribe el nuevo ISBN");
+            String nuevoISBN = lector.nextLine();
+            libroCopia.setISBN(nuevoISBN);
+        }
+        System.out.println("Quieres modificar el autor? Escribe Y");
+        respuesta = lector.nextLine();
+        if(respuesta.equals("Y")){
+            System.out.println("Escribe el nuevo autor");
+            String nuevoAutor = lector.nextLine();
+            libroCopia.setAutor(nuevoAutor);
+        }
+        System.out.println("Quieres modificar la editorial? Escribe Y");
+        respuesta = lector.nextLine();
+        if(respuesta.equals("Y")){
+            System.out.println("Escribe la nueva editorial");
+            String nuevaEditorial = lector.nextLine();
+            libroCopia.setEditorial(nuevaEditorial);
+        }
+        System.out.println("Quieres modificar el titulo?");
+        respuesta = lector.nextLine();
+        if(respuesta.equals("Y")){
+            System.out.println("Escribe el nuevo titulo");
+            String nuevoTitulo = lector.nextLine();
+            libroCopia.setTitulo(nuevoTitulo);
+        }
+        System.out.println("Quieres modificar el número de copias totales?");
+        respuesta = lector.nextLine();
+        if(respuesta.equals("Y")){
+            System.out.println("Escribe las copias totales");
+            int nuevasCopiasTotales = lector.nextInt();
+            lector.nextLine();
+            libroCopia.setNumeroCopiasTotales(nuevasCopiasTotales);
+        }
+        System.out.println("Quieres modificar el numero de copias disponibles?");
+        respuesta = lector.nextLine();
+        if(respuesta.equals("Y")){
+            System.out.println("Escribe el nº de copias disponibles");
+            int nuevasCopiasDisponibles = lector.nextInt();
+            lector.nextLine();
+            libroCopia.setNumeroCopiasDisponibles(nuevasCopiasDisponibles);
+        }
+        this.getLibros().add(libroCopia);
     }
 }
