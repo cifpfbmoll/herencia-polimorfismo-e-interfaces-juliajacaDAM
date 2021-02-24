@@ -60,9 +60,6 @@ public class Biblioteca {
     }
 
 
- 
-   
-    
     public void mostrarLibros() {
         for(int i = 0; i < this.libros.size(); i++){
             int ordenLibro = i +1;
@@ -259,5 +256,36 @@ public class Biblioteca {
             libroCopia.setNumeroCopiasDisponibles(nuevasCopiasDisponibles);
         }
         this.getLibros().add(libroCopia);
+    }
+    
+    public static void añadirBiblioteca(ArrayList <Biblioteca> bibliotecas){
+        Scanner lector = new Scanner(System.in);
+        System.out.println("Escribe el nombre de la biblioteca");
+        String nombre = lector.nextLine();
+        bibliotecas.add(new Biblioteca(nombre));   
+    }
+    
+    public static int buscarBiblioteca(ArrayList <Biblioteca> bibliotecas){
+        boolean encontrada = false;
+        int posicionBiblioteca = 0;
+        Scanner lector = new Scanner(System.in);
+        System.out.println("Escribe el nombre de la biblioteca a buscar");
+        String nombre = lector.nextLine();
+        while(!encontrada && posicionBiblioteca < bibliotecas.size()){
+            if(bibliotecas.get(posicionBiblioteca).getNombreBiblioteca().equals(nombre)){
+                return posicionBiblioteca;
+            } 
+            posicionBiblioteca++;
+        }
+        return -1;
+    }
+    
+    public static void eliminarBiblioteca(ArrayList <Biblioteca> bibliotecas){
+        int posicionBiblioteca = buscarBiblioteca(bibliotecas);
+        if(posicionBiblioteca != -1){
+            bibliotecas.remove(posicionBiblioteca);
+        }else{
+            System.out.println("La biblioteca no existe");
+        }
     }
 }

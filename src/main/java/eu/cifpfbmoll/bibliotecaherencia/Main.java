@@ -18,6 +18,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        ArrayList <Biblioteca> bibliotecas = new ArrayList();
         System.out.println("HOLA MUNDO");
         Libro libro1 = new Libro("ISBN1", "El nombre de la rosa","Umberto ECO", "AAA Editores", 20,19);
         Libro libro2 = new Libro("ISBN2", "Sinuhe el Egipcio","Mika Waltari", "BBB Editores", 1,1);
@@ -51,15 +52,16 @@ public class Main {
         arrayPersonas.add(bibliotecarioPrueba);
         biblioteca.setPersonas(arrayPersonas);
         //usuario1.solicitarDatosPersona();
-        
+        bibliotecas.add(biblioteca);
         boolean continuar = true;
         while(continuar){
             Scanner lector = new Scanner(System.in);
             System.out.println("Escribe la opción que quieras:\n A: Añadir USUARIO\nB:Añadir bibliotecario\n L: Hacer login "
                     + "\nLC: Añadir libro copia "
-                    + "\nCCU: Cambiar contraseña usuario\n"
-                     + "\nCCB: Cambiar contraseña bibliotecario\n"
-                    + "Salir: cerrar la aplicación" );
+                    + "\nCCU: Cambiar contraseña usuario"
+                     + "\nCCB: Cambiar contraseña bibliotecario"
+                    +"\nG: Gestionar bibliotecas"
+                    + "\nSalir: cerrar la aplicación" );
             String opcion = lector.nextLine();
             System.out.println("La opción del usuario es " + opcion);
             switch(opcion){
@@ -123,7 +125,6 @@ public class Main {
                     }while("no".equals(desloguear));
 
                 }
-
                   break;
             case "LC":
                 System.out.println("Vas a añadir un libro copia");
@@ -137,7 +138,6 @@ public class Main {
                 }
                 break;
             case "CCU":
-                
                 System.out.println("Vas a cambiar la contraseña");
                 int posicionUsuario = biblioteca.identificarUsuario();
                 System.out.println("Posiscion usuario" + posicionUsuario);
@@ -149,8 +149,7 @@ public class Main {
                 }else{
                         System.out.println("No existe");
                         }
-                
-                break;
+                 break;
             case "CCB":
                 System.out.println("Vas a cambiar la contraseña");
                 int posicionBibliotecarioC = biblioteca.identificarBibliotecario();
@@ -163,7 +162,32 @@ public class Main {
                 }else{
                         System.out.println("No existe");
                         }
-                
+                break;
+            case "G":
+                System.out.println(" \"Vas a gestionar bibliotecas\"");
+                boolean gestionar = true;
+                while(gestionar){
+                    System.out.println("A: añadir biblioteca"
+                            + "\nE: Eliminar Biblioteca");
+                    String opcionGestion = lector.nextLine();
+                    switch(opcionGestion){
+                        case "A":
+                            Biblioteca.añadirBiblioteca(bibliotecas);
+                            System.out.println(bibliotecas);
+                            break;
+                        case "E":
+                            System.out.println("bibliotecas antes" + bibliotecas);
+                            Biblioteca.eliminarBiblioteca(bibliotecas);
+                            System.out.println("Bibliotecas despues" + bibliotecas);
+                            break;
+                        case "Salir":
+                            gestionar = false;
+                            break;
+                        default:
+                           System.out.println("Opcion incorrecta"); 
+                    }
+                }
+               
                 break;
             case "Salir":
                 System.out.println("Vas a salir");
@@ -172,9 +196,6 @@ public class Main {
             default:
                 System.out.println("Opcion incorrecta");
         }
-        
-      
-       
         
         }    
     }
