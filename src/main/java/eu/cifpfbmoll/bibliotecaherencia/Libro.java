@@ -110,7 +110,7 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" + "ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", numeroCopiasTotales=" + numeroCopiasTotales + ", numeroCopiasDisponibles=" + numeroCopiasDisponibles + '}';
+        return "ISBN: " + ISBN + "\nTitulo: " + titulo + "\nAutor: " + autor + "\nEditorial:" + editorial + "\nNumero Copias Totales: " + numeroCopiasTotales + "\nNumero Copias Disponibles: " + numeroCopiasDisponibles + '.';
     }
     
     public static void añadirLibro(ArrayList <Libro> arrayLibros){

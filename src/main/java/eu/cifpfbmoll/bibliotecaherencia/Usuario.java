@@ -111,6 +111,16 @@ public class Usuario extends Persona{
          return true;
     }
     
-    
+    @Override
+    public void cambiarContraseña(){
+        System.out.println("hola");
+        Scanner lector = new Scanner(System.in);
+        System.out.println("Escribe tu nuevo telefono");
+        String nuevoTel = lector.nextLine();
+        System.out.println("Escribe tu nuevo correo");
+        String nuevoCor = lector.nextLine();
+        this.setCorreo(nuevoCor);
+        this.setTelefono(nuevoTel);
+    };
     
 }

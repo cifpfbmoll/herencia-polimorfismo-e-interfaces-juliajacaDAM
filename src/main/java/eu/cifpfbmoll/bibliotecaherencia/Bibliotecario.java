@@ -85,7 +85,16 @@ public class Bibliotecario extends Persona{
         }
         else {return true;}
     }
-    
+    @Override
+    public void cambiarContraseña(){
+        Scanner lector = new Scanner(System.in);
+        System.out.println("Escribe tu nuevo nif");
+        String nuevoNif = lector.nextLine();
+        System.out.println("Escribe tu nueva contraseña");
+        String nuevaPass = lector.nextLine();
+        this.setNif(nuevoNif);
+        this.setContraseña(nuevaPass);
+    };
     
     
     

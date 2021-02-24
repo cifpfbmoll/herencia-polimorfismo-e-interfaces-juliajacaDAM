@@ -99,4 +99,6 @@ public abstract class Persona {
     public boolean prohibirEntrada(String nif, String pass){
         return true;
     };
+    
+    public abstract void cambiarContraseña();
 }

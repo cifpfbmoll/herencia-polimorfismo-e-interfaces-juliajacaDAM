@@ -22,7 +22,7 @@ public class Main {
         Libro libro1 = new Libro("ISBN1", "El nombre de la rosa","Umberto ECO", "AAA Editores", 20,19);
         Libro libro2 = new Libro("ISBN2", "Sinuhe el Egipcio","Mika Waltari", "BBB Editores", 1,1);
         System.out.println(libro1.toString());
-        ArrayList <Libro> coleccion = new ArrayList <Libro>();
+        ArrayList <Libro> coleccion = new ArrayList();
         coleccion.add(0, libro1);
         coleccion.add(libro2);
         Biblioteca biblioteca = new Biblioteca("maria Moliner");
@@ -38,6 +38,9 @@ public class Main {
         
         Usuario usuario1 = new Usuario("00000", "C/Falsa", "41222", "hola@hola","estrellita", "castro","fer", 87 );
         Reserva prueba = new Reserva(libro1);
+        System.out.println("Fecha de devolucion");
+        prueba.obtenerFechaDevolución();
+        prueba.mostrarReservaChula();
         ArrayList <Reserva> reservasUser = usuario1.getListaReservas();
         reservasUser.add(prueba);
         usuario1.setListaReservas(reservasUser);
@@ -53,8 +56,9 @@ public class Main {
         while(continuar){
             Scanner lector = new Scanner(System.in);
             System.out.println("Escribe la opción que quieras:\n A: Añadir USUARIO\nB:Añadir bibliotecario\n L: Hacer login "
-                    + "\nLC: Añadir libro copia\n "
-                    + "\nCC: Cambiar contraseña"
+                    + "\nLC: Añadir libro copia "
+                    + "\nCCU: Cambiar contraseña usuario\n"
+                     + "\nCCB: Cambiar contraseña bibliotecario\n"
                     + "Salir: cerrar la aplicación" );
             String opcion = lector.nextLine();
             System.out.println("La opción del usuario es " + opcion);
@@ -132,8 +136,33 @@ public class Main {
                     System.out.println("Ese libro no existe");
                 }
                 break;
-            case "CC":
+            case "CCU":
+                
                 System.out.println("Vas a cambiar la contraseña");
+                int posicionUsuario = biblioteca.identificarUsuario();
+                System.out.println("Posiscion usuario" + posicionUsuario);
+                if (posicionUsuario != -1){
+                    System.out.println("datos antes" +biblioteca.getPersonas().get(posicionUsuario).toString());
+                    //llamo al metodo de cambiar 
+                    biblioteca.getPersonas().get(posicionUsuario).cambiarContraseña();
+                    System.out.println("datos despues" + biblioteca.getPersonas().get(posicionUsuario).toString());
+                }else{
+                        System.out.println("No existe");
+                        }
+                
+                break;
+            case "CCB":
+                System.out.println("Vas a cambiar la contraseña");
+                int posicionBibliotecarioC = biblioteca.identificarBibliotecario();
+                System.out.println("Posiscion usuario" + posicionBibliotecarioC);
+                if (posicionBibliotecarioC != -1){
+                    System.out.println("datos antes" +biblioteca.getPersonas().get(posicionBibliotecarioC).toString());
+                    //llamo al metodo de cambiar 
+                    biblioteca.getPersonas().get(posicionBibliotecarioC).cambiarContraseña();
+                    System.out.println("datos despues" + biblioteca.getPersonas().get(posicionBibliotecarioC).toString());
+                }else{
+                        System.out.println("No existe");
+                        }
                 
                 break;
             case "Salir":
