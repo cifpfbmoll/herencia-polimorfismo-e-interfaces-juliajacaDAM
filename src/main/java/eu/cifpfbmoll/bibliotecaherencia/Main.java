@@ -17,7 +17,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MiException {
         ArrayList <Biblioteca> bibliotecas = new ArrayList();
         System.out.println("HOLA MUNDO");
         Libro libro1 = new Libro("ISBN1", "El nombre de la rosa","Umberto ECO", "AAA Editores", 20,19);
@@ -97,9 +97,9 @@ public class Main {
                 break;
             case "L":
                 System.out.println("Vas a hacer login BIBLIOTECARIO");
-                int posicionBibliotecario = biblioteca.identificarBibliotecario();
-                    
-                if(posicionBibliotecario != -1){
+                //TRATO excepcion en el main
+                try{
+                    int posicionBibliotecario = biblioteca.identificarBibliotecario();
                     System.out.println("Bienvenido"+biblioteca.getPersonas().get(posicionBibliotecario).toString());
                     String desloguear = "no";
                     do{
@@ -123,9 +123,11 @@ public class Main {
                                 System.out.println("Opcion incorrecta");
                         }
                     }while("no".equals(desloguear));
-
                 }
-                  break;
+                catch(MiException ex) {
+                    System.out.println(ex.getMessage());
+                }
+                break;
             case "LC":
                 System.out.println("Vas a añadir un libro copia");
                 int posicionLibro = Libro.buscarLibroPorISBN(biblioteca.getLibros());
@@ -139,29 +141,35 @@ public class Main {
                 break;
             case "CCU":
                 System.out.println("Vas a cambiar la contraseña");
-                int posicionUsuario = biblioteca.identificarUsuario();
-                System.out.println("Posiscion usuario" + posicionUsuario);
-                if (posicionUsuario != -1){
-                    System.out.println("datos antes" +biblioteca.getPersonas().get(posicionUsuario).toString());
-                    //llamo al metodo de cambiar 
-                    biblioteca.getPersonas().get(posicionUsuario).cambiarContraseña();
-                    System.out.println("datos despues" + biblioteca.getPersonas().get(posicionUsuario).toString());
-                }else{
-                        System.out.println("No existe");
-                        }
+                try{
+                    int posicionUsuario = biblioteca.identificarUsuario();
+                    System.out.println("Posiscion usuario" + posicionUsuario);
+                    if (posicionUsuario != -1){
+                        System.out.println("datos antes" +biblioteca.getPersonas().get(posicionUsuario).toString());
+                        //llamo al metodo de cambiar 
+                        biblioteca.getPersonas().get(posicionUsuario).cambiarContraseña();
+                        System.out.println("datos despues" + biblioteca.getPersonas().get(posicionUsuario).toString());
+                    }
+                }
+                catch (MiException ex){
+                    System.out.println(ex.getMessage());
+                }
                  break;
             case "CCB":
                 System.out.println("Vas a cambiar la contraseña");
-                int posicionBibliotecarioC = biblioteca.identificarBibliotecario();
-                System.out.println("Posiscion usuario" + posicionBibliotecarioC);
-                if (posicionBibliotecarioC != -1){
-                    System.out.println("datos antes" +biblioteca.getPersonas().get(posicionBibliotecarioC).toString());
-                    //llamo al metodo de cambiar 
-                    biblioteca.getPersonas().get(posicionBibliotecarioC).cambiarContraseña();
-                    System.out.println("datos despues" + biblioteca.getPersonas().get(posicionBibliotecarioC).toString());
-                }else{
-                        System.out.println("No existe");
-                        }
+                try{
+                     int posicionBibliotecarioC = biblioteca.identificarBibliotecario();
+                    System.out.println("Posiscion usuario" + posicionBibliotecarioC);
+                    if (posicionBibliotecarioC != -1){
+                        System.out.println("datos antes" +biblioteca.getPersonas().get(posicionBibliotecarioC).toString());
+                        //llamo al metodo de cambiar 
+                        biblioteca.getPersonas().get(posicionBibliotecarioC).cambiarContraseña();
+                        System.out.println("datos despues" + biblioteca.getPersonas().get(posicionBibliotecarioC).toString());
+                    }   
+                }catch(MiException ex){
+                    System.out.println(ex.getMessage());
+                }
+              
                 break;
             case "G":
                 System.out.println(" \"Vas a gestionar bibliotecas\"");

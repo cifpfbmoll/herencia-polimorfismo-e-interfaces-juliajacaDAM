@@ -78,7 +78,7 @@ public class Biblioteca {
   
     }
     
-    public int identificarBibliotecario(){
+    public int identificarBibliotecario() throws MiException{
         int intentos = 0;
         boolean prohibirBibliotecario = true;
         
@@ -105,12 +105,11 @@ public class Biblioteca {
             intentos ++;
             
         } while(intentos < 3);
-        System.out.println("El bibliotecario no existe");
-        return -1;
+        throw new MiException(111);
         
     }
     
-    public int identificarUsuario(){
+    public int identificarUsuario() throws MiException{
         int intentos = 0;
         boolean prohibirUsuario = true;
         int posicionUsuario = -1;
@@ -138,12 +137,13 @@ public class Biblioteca {
             intentos ++;
             
         } while(intentos < 3);
-        System.out.println("El usuario no existe");
-        return posicionUsuario;
+        throw new MiException(222);
         }
         
-    public void prestarLibro(){       
-        int posicionUsuario = identificarUsuario();
+    public void prestarLibro(){   
+        // TRATO EXCEPCION EN EL METODO LLAMANTE Y TRATO EXCEPTION EN EL PROPIO METODO
+        try{
+            int posicionUsuario = identificarUsuario();
         System.out.println("Posiscion usuario" + posicionUsuario);
         if (posicionUsuario != -1){
                 System.out.println("Estas en el user "+this.getPersonas().get(posicionUsuario).toString());
@@ -151,8 +151,9 @@ public class Biblioteca {
                 this.mostrarLibros();
                 int posicionLibro = Libro.buscarLibroPorISBN(this.getLibros());
                 System.out.println("posición libro"  + posicionLibro);
-
-                if(this.getLibros().get(posicionLibro).getNumeroCopiasDisponibles() > 0){// teniendo la posicion del libro vamos a hacer la reserva
+                
+                try{
+                     if(this.getLibros().get(posicionLibro).getNumeroCopiasDisponibles() > 0){// teniendo la posicion del libro vamos a hacer la reserva
                     Reserva prueba = new Reserva(this.getLibros().get(posicionLibro));
                     ArrayList <Reserva> reservas = ((Usuario)this.getPersonas().get(posicionUsuario )).getListaReservas();
                     reservas.add(prueba);
@@ -161,13 +162,22 @@ public class Biblioteca {
                     this.getLibros().get(posicionLibro).setNumeroCopiasDisponibles(copiasAntes - 1);
                     System.out.println( ((Usuario)this.getPersonas().get(posicionUsuario)).toString());
 
-                }else{
-                    System.out.println("Ese libro no se puede reservar porque no hay copias disponibles");}
-            }
+                }else {
+                     throw new MiException(333); 
+                     }
+                }
+                catch(MiException ex){
+                    System.out.println(ex.getMessage());
+                }}
+        }catch(MiException ex){
+            System.out.println(ex.getMessage());
+        }
+        
         
     }
     // fin del metodo
     public void devolverLibro(){
+        try{
         int posicionUsuario = identificarUsuario();
         System.out.println("Posiscion usuario" + posicionUsuario);
         if (posicionUsuario != -1){
@@ -202,8 +212,10 @@ public class Biblioteca {
                 System.out.println("Ese libro no está en la lista del usuario");
             }
  
-        }else{
-        System.out.println("El usuario no existe");
+        }
+        }
+        catch (MiException ex){
+            System.out.println(ex.getMessage());
         }
     }
     
